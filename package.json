@@ -1,0 +1,47 @@
+{
+  "name": "xingce-ai-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "prisma generate && next build --webpack",
+    "start": "next start --hostname 127.0.0.1",
+    "db:setup": "node --env-file=.env scripts/prepare-db.mjs && prisma migrate deploy && tsx scripts/import-guokao.ts",
+    "setup": "prisma generate && npm run db:setup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test:acceptance": "node --env-file=.env scripts/acceptance-guokao.mjs",
+    "format": "prettier --write src scripts tests prisma/seed.ts",
+    "test:practice": "node --env-file=.env scripts/acceptance-guokao.mjs",
+    "import:guokao": "tsx scripts/import-guokao.ts"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.13",
+    "@prisma/client": "^6.19.0",
+    "katex": "^0.19.1",
+    "lucide-react": "^0.468.0",
+    "mammoth": "^1.11.0",
+    "next": "^16.0.0",
+    "pdfjs-dist": "^6.2.108",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/katex": "^0.16.7",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "jszip": "^3.10.2",
+    "pdf-lib": "^1.17.1",
+    "prettier": "^3.9.10",
+    "prisma": "^6.19.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.0"
+  }
+}

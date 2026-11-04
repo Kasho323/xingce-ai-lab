@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "sqlite"
+  url = env("DATABASE_URL")
+}
+model Source {
+  id String @id @default(cuid())
+  name String
+  exam String @default("")
+  year Int?
+  region String @default("")
+  url String @default("")
+  rights String @default("用户自用资料，授权未核验")
+  filename String?
+  mime String?
+  fileHash String? @unique
+  rawText String @default("")
+  createdAt DateTime @default(now())
+  questions Question[]
+  drafts Draft[]
+}
+model Question {
+  id String @id @default(cuid())
+  sourceId String
+  source Source @relation(fields:[sourceId],references:[id])
+  number String
+  page Int @default(1)
+  endPage Int @default(1)
+  stem String
+  material String @default("")
+  options String
+  answer String?
+  evidence String @default("")
+  status String @default("USER_UPLOAD")
+  module String
+  knowledge String
+  difficulty String @default("基础")
+  reference String @default("")
+  rawText String
+  fingerprint String @unique
+  lesson String?
+  quality String @default("PENDING")
+  createdAt DateTime @default(now())
+  attempts Attempt[]
+  revisions Revision[]
+}
+model Draft {
+  id String @id @default(cuid())
+  sourceId String
+  source Source @relation(fields:[sourceId],references:[id])
+  payload String
+  originalPayload String @default("")
+  state String @default("PENDING")
+  warnings String
+  createdAt DateTime @default(now())
+}
+model Revision {
+  id String @id @default(cuid())
+  questionId String
+  question Question @relation(fields:[questionId],references:[id])
+  before String
+  after String
+  reason String
+  createdAt DateTime @default(now())
+}
+model Attempt {
+  id String @id @default(cuid())
+  questionId String
+  question Question @relation(fields:[questionId],references:[id])
+  selected String
+  correct Boolean?
+  elapsed Int
+  reason String @default("")
+  mastered Boolean @default(false)
+  createdAt DateTime @default(now())
+}
+
+model StudyState {
+  key String @id
+  value String
+  updatedAt DateTime @updatedAt
+}

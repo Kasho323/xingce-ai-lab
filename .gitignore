@@ -1,0 +1,25 @@
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
+data/
+uploads/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.tsbuildinfo
+playwright-report/
+test-results/
+artifacts/
+
+# Additional privacy protection
+*.log
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+.DS_Store
